@@ -6,26 +6,53 @@
 
 <p id="demo"></p>
 
-
+<p id="demo2"></p>
 
 <script>
 function deal() {
-	var card1;
-	var card2;
-	var card3;
-	var card4;
-	var card5;
-	var cards = ["AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH",
-		     "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD",
-		     "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "10S", "JS", "QS", "KS",
-		     "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC"];
+	var card1, card2, card3, card4, card5;
+	var hand;
+	var c1, c2, c3, c4, c5;
+	var s1, s2, s3, s4, s5;
+	var cards = ["AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "TH", "JH", "QH", "KH",
+		     "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "TD", "JD", "QD", "KD",
+		     "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "TS", "JS", "QS", "KS",
+		     "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "TC", "JC", "QC", "KC"];
 cards.sort(function(a,b){return 0.5 - Math.random()});
 	card1 = cards.pop();
 	card2 = cards.pop();
 	card3 = cards.pop();
 	card4 = cards.pop();
 	card5 = cards.pop();
-document.getElementById("demo").innerHTML = card1 + " " + card2 + " " + card3 + " " + card4 + " " + card5;
+	hand = card1 + " " + card2 + " " + card3 + " " + card4 + " " + card5;
+
+	document.getElementById("demo").innerHTML = hand;
+
+	c1 = hand.charAt(0);
+	c2 = hand.charAt(3);
+	c3 = hand.charAt(6);
+	c4 = hand.charAt(9);
+	c5 = hand.charAt(12);
+	
+	s1 = hand.charAt(1);
+	s2 = hand.charAt(4);
+	s3 = hand.charAt(7);
+	s4 = hand.charAt(10);
+	s5 = hand.charAt(13);
+	
+	if ((c1 == c2 && (c1==c3 || c1 == c4 || c1 == c5)) || (c1 == c3 && (c1 == c4 || c1 == c5)) || (c1 == c4 && c1 == c5) ||
+		(c2 == c3 && (c2 == c4 || c2 == c5)) || (c2 == c4 && c2 == c5) || (c3 == c4 && c3 == c5)) {
+		document.getElementById("demo2").innerHTML = "You got a three-of-a-kind!";
+	} else if ((c1 == c2 && (c3 == c4 || c3 == c5 || c4 == c5)) || (c1 == c3 && (c2 == c4 || c2 == c5 || c4 == c5)) ||
+		(c1 == c4 && (c2 == c3 || c2 == c5 || c3 == c5)) || (c1 == c5 && (c2 == c3 || c2 == c4 || c3 == c4)) ||
+		(c2 == c3 && c4 == c5)) {
+		document.getElementById("demo2").innerHTML = "You got two pair!";
+	} else if (c1 == c2 || c1 == c3 || c1 == c4 || c1 == c5 || c2 == c3 || c2 == c4 || c2 == c5 ||
+		c3 == c4 || c3 == c5 || c4 == c5) {
+		document.getElementById("demo2").innerHTML = "You got a pair!";
+	} else {
+		document.getElementById("demo2").innerHTML = "You got nothing!";
+	}
 }
 </script>
 
