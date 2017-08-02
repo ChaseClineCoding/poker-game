@@ -1,34 +1,76 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+body {
+	background-color: black;
+	color: white;
+}
+button {
+	font-size: 27px;
+}
+div {
+	text-align: center;
+	padding-top: 75px;
+}
+#display {
+	font-size: 27px;
+	text-align: center;
+	padding: 100px;
+}
+</style>
+</head>
+
 <body>
 
+<div>
 <button onclick=deal()>Deal</button>
+</div>
+<br>
+<div>
+<img id="card1" style="display:none; width:118px; height:169px;">
+<img id="card2" style="display:none; width:118px; height:169px;">
+<img id="card3" style="display:none; width:118px; height:169px;">
+<img id="card4" style="display:none; width:118px; height:169px;">
+<img id="card5" style="display:none; width:118px; height:169px;">
+</div>
 
-<p id="demo"></p>
-
-<p id="demo2"></p>
+<p id="display"></p>
 
 <script>
 function deal() {
 	var card1, card2, card3, card4, card5;
 	var hand;
-	var c1, c2, c3, c4, c5; 																					//what card is drawn (i.e. A, 2, 3, Q, K, etc..)
-	var s1, s2, s3, s4, s5; 																					//what suit is the card (H, D, S, C)
-	var i1, i2, i3, i4, i5; 																					//input for straight array
+	var c1, c2, c3, c4, c5; 												//what card is drawn (i.e. A, 2, 3, Q, K, etc..)
+	var s1, s2, s3, s4, s5; 												//what suit is the card (H, D, S, C)
+	var i1, i2, i3, i4, i5; 												//input for straight array
 	var cards = ["AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "TH", "JH", "QH", "KH",
-		     "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "TD", "JD", "QD", "KD",
-		     "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "TS", "JS", "QS", "KS",
-		     "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "TC", "JC", "QC", "KC"];
-
-	cards.sort(function(a,b){return 0.5 - Math.random()});
+				 "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "TD", "JD", "QD", "KD",
+				 "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "TS", "JS", "QS", "KS",
+				 "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "TC", "JC", "QC", "KC"];
+cards.sort(function(a,b){return 0.5 - Math.random()});
 	card1 = cards.pop();
 	card2 = cards.pop();
 	card3 = cards.pop();
 	card4 = cards.pop();
 	card5 = cards.pop();
 	hand = card1 + " " + card2 + " " + card3 + " " + card4 + " " + card5;
-	document.getElementById("demo").innerHTML = hand;
-
+	
+	document.getElementById("card1").src = "cards/" + card1 + ".jpg";
+	document.getElementById("card1").style.display = "inline";
+	
+	document.getElementById("card2").src = "cards/" + card2 + ".jpg";
+	document.getElementById("card2").style.display = "inline";
+	
+	document.getElementById("card3").src = "cards/" + card3 + ".jpg";
+	document.getElementById("card3").style.display = "inline";
+	
+	document.getElementById("card4").src = "cards/" + card4 + ".jpg";
+	document.getElementById("card4").style.display = "inline";
+	
+	document.getElementById("card5").src = "cards/" + card5 + ".jpg";
+	document.getElementById("card5").style.display = "inline";
+	
 	c1 = hand.charAt(0);
 	c2 = hand.charAt(3);
 	c3 = hand.charAt(6);
@@ -41,7 +83,7 @@ function deal() {
 	s4 = hand.charAt(10);
 	s5 = hand.charAt(13);
 	
-	switch(c1) {
+	switch(c1) {															//switches used for straight array
 		case "A":
 			i1 = 1;
 			break;
@@ -250,35 +292,35 @@ function deal() {
 	straight.sort(function(a, b) {return a - b});
 	
 	if ((straight[0] == 1 && straight[1] == 10 && straight[2] == 11 && straight[3] == 12 && straight[4] == 13) &&
-	    (s1 == s2 && s1 == s3 && s1 == s4 && s1 == s5)) {
-		document.getElementById("demo2").innerHTML = "You got a royal flush!";
+		(s1 == s2 && s1 == s3 && s1 == s4 && s1 == s5)) {
+		document.getElementById("display").innerHTML = "You got a royal flush!";
 	} else if ((straight[4] - straight[0] < 5) && (s1 == s2 && s1 == s3 && s1 == s4 && s1 == s5)) {
-		document.getElementById("demo2").innerHTML = "You got a straight flush!";
+		document.getElementById("display").innerHTML = "You got a straight flush!";
 	} else if ((c1 == c2 && c1 == c3 && c1 == c4) || (c1 == c2 && c1 == c3 && c1 == c5) || (c1 == c2 && c1 == c4 && c1 == c5) ||
-		   (c1 == c3 && c1 == c4 && c1 == c5) || (c2 == c3 && c2 == c4 && c2 == c5)) {
-		document.getElementById("demo2").innerHTML = "You got a four-of-a-kind!";
+			   (c1 == c3 && c1 == c4 && c1 == c5) || (c2 == c3 && c2 == c4 && c2 == c5)) {
+		document.getElementById("display").innerHTML = "You got a four-of-a-kind!";
 	} else if ((c1 == c2 && c1 == c3 && c4 == c5) || (c1 == c2 && c1 == c4 && c3 == c5) || (c1 == c2 && c1 == c5 && c3 == c4) ||
-		   (c1 == c3 && c1 == c4 && c2 == c5) || (c1 == c3 && c1 == c5 && c2 == c4) || (c1 == c4 && c1 == c5 && c2 == c3) ||
-		   (c2 == c3 && c2 == c4 && c1 == c5) || (c2 == c3 && c2 == c5 && c1 == c4) || (c2 == c4 && c2 == c5 && c1 == c3) ||
-		   (c3 == c4 && c3 == c5 && c1 == c2)) {
-		document.getElementById("demo2").innerHTML = "You got a full house!";
+			   (c1 == c3 && c1 == c4 && c2 == c5) || (c1 == c3 && c1 == c5 && c2 == c4) || (c1 == c4 && c1 == c5 && c2 == c3) ||
+			   (c2 == c3 && c2 == c4 && c1 == c5) || (c2 == c3 && c2 == c5 && c1 == c4) || (c2 == c4 && c2 == c5 && c1 == c3) ||
+			   (c3 == c4 && c3 == c5 && c1 == c2)) {
+		document.getElementById("display").innerHTML = "You got a full house!";
 	} else if (s1 == s2 && s1 == s3 && s1 == s4 && s1 == s5) {
-		document.getElementById("demo2").innerHTML = "You got a flush!";
+		document.getElementById("display").innerHTML = "You got a flush!";
 	} else if ((c1 == c2 && (c1 == c3 || c1 == c4 || c1 == c5)) || (c1 == c3 && (c1 == c4 || c1 == c5)) || (c1 == c4 && c1 == c5) ||
-		   (c2 == c3 && (c2 == c4 || c2 == c5)) || (c2 == c4 && c2 == c5) || (c3 == c4 && c3 == c5)) {
-		document.getElementById("demo2").innerHTML = "You got a three-of-a-kind!";
+			   (c2 == c3 && (c2 == c4 || c2 == c5)) || (c2 == c4 && c2 == c5) || (c3 == c4 && c3 == c5)) {
+		document.getElementById("display").innerHTML = "You got a three-of-a-kind!";
 	} else if ((c1 == c2 && (c3 == c4 || c3 == c5 || c4 == c5)) || (c1 == c3 && (c2 == c4 || c2 == c5 || c4 == c5)) ||
-		   (c1 == c4 && (c2 == c3 || c2 == c5 || c3 == c5)) || (c1 == c5 && (c2 == c3 || c2 == c4 || c3 == c4)) ||
-		   (c2 == c3 && c4 == c5)) {
-		document.getElementById("demo2").innerHTML = "You got two pair!";
+			   (c1 == c4 && (c2 == c3 || c2 == c5 || c3 == c5)) || (c1 == c5 && (c2 == c3 || c2 == c4 || c3 == c4)) ||
+			   (c2 == c3 && c4 == c5)) {
+		document.getElementById("display").innerHTML = "You got two pair!";
 	} else if (c1 == c2 || c1 == c3 || c1 == c4 || c1 == c5 || c2 == c3 || c2 == c4 || c2 == c5 ||
-		   c3 == c4 || c3 == c5 || c4 == c5) {
-		document.getElementById("demo2").innerHTML = "You got a pair!";
+			   c3 == c4 || c3 == c5 || c4 == c5) {
+		document.getElementById("display").innerHTML = "You got a pair!";
 	} else if ((straight[4] - straight[0] < 5) || (straight[0] == 1 && straight[1] == 10 && straight[2] == 11 && 
-		   straight[3] == 12 && straight[4] == 13)) {
-		document.getElementById("demo2").innerHTML = "You got a straight!";
+			   straight[3] == 12 && straight[4] == 13)) {
+		document.getElementById("display").innerHTML = "You got a straight!";
 	} else {
-		document.getElementById("demo2").innerHTML = "You got nothing!";
+		document.getElementById("display").innerHTML = "You got a high card!";
 	}
 }
 </script>
